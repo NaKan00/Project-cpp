@@ -1,4 +1,5 @@
 #include "silhouette.h"
+
 using namespace std;
 
 
@@ -9,6 +10,7 @@ double a(cluster cluster, entity point, bool selfCluster){
     }
     return sum/(cluster.size()-selfCluster);
 }
+
 double b(vector<cluster>clusters, int indexCurrentCluster, entity point){
     vector<double> sums;
     for (int i = 0; i < clusters.size(); i++)
@@ -44,6 +46,7 @@ void writeStat(vector<cluster> clusters, string STAT){
         file<<"cluster "<<i+1<<":\t"<<SC(clusters,i)<<endl;
     }
     cout << fixed;
+    file.close();
     cout<<"[INFO] write stats [32msuccess[0m"<<endl;
 }
     

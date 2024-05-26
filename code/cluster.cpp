@@ -9,6 +9,7 @@ void cluster::writeInFile(vector<cluster> clusters, string OUT){
             file<<point.id<<endl;
         }
     }
+    file.close();
     cout<<"[INFO] write result [32msuccess[0m"<<endl;
 }
 
@@ -42,4 +43,53 @@ vector<cluster> cluster::distributeIntoClusters(vector<entity> dataset, vector<d
         clusters.at(minDistIndex(point, centroids)).push_back(point);
     }
     return clusters;
+}
+
+vector<double> cluster::k_mean_pp(vector<entity> dataset,int N){
+    vector<double> centroids;
+    
+    centroids.push_back(
+        dataset.at(
+            rand() % dataset.size()
+        ).value
+    );
+
+    while (centroids.size()<N)
+    {
+        double sumSquad = 0;
+        for(entity point : dataset){
+            double md = cluster::minDist(point, centroids);
+            sumSquad+=md*md;
+        }
+        int r = rand() % (int)sumSquad;
+        for(entity point : dataset){
+            double md = cluster::minDist(point, centroids);
+            r-= md*md;
+            if(r<=0){
+                centroids.push_back(point.value);
+                break;
+            }
+        }
+    }
+    return centroids;
+
+}
+
+
+
+double cluster::minDist(entity point, vector<double> centroids){
+    double result = abs(point.value - centroids.at(0));
+    for(double centr : centroids)
+        result = min(result, abs(point.value - centr));
+    return result;
+}
+
+
+bool cluster::hasDifferent(vector<double> cent1 ,vector<double> cent2){
+    for(int i=0;i<cent1.size();i++){
+        if(cent1.at(i)!=cent2.at(i)){
+            return true;
+        }
+    }
+    return false;
 }
