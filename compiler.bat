@@ -10,7 +10,7 @@ IF %ERRORLEVEL% NEQ 0 GOTO :failure
 echo [INFO] create exe files
 g++ object\parser.o object\entity.o object\cluster.o object\silhouette.o object\k_means.o -o k_means
 g++ object\parser.o object\entity.o object\cluster.o object\silhouette.o object\k_medoids.o -o k_medoids
-g++ object\parser.o object\entity.o object\cluster.o object\silhouette.o object\k_medoids.o -o hca
+g++ object\parser.o object\entity.o object\cluster.o object\silhouette.o object\hca.o -o hca
 
 IF %ERRORLEVEL% NEQ 0 GOTO :failure
 
